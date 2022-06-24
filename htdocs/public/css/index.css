@@ -6,13 +6,20 @@ ul{
     height: fit-content;
 }
 #genres,#songs,#queue{
-    width: 33%;
     display: inline-block;
     text-align: center;
     background-color: brown;
 }
+
 #genres{
     margin-left: 0.25%;
+    width: 25%;
+}
+#queue{
+    width: 25%;
+}
+#songs{
+    width: 49%;
 }
 nav{
     background-color: aqua;

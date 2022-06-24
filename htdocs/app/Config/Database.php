@@ -33,9 +33,9 @@ class Database extends Config
     public $default = [
         'DSN'      => '',
         'hostname' => 'localhost',
-        'username' => '',
-        'password' => '',
-        'database' => '',
+        'username' => 'Rowin',
+        'password' => 'IgWYT_wxUpe.kx9y',
+        'database' => 'jukebox',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
