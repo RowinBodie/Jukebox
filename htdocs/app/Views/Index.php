@@ -16,6 +16,7 @@
             <ul id="nav-items">
                 <li><a href="/">Homepage</a></li>
                 <li><a href="/playlists">Playlists</a></li>
+                <li><a href="/createData">Create Data</a></li>
             </ul>
         </nav>
         <div id="lists-body">
