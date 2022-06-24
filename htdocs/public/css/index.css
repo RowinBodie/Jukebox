@@ -1,0 +1,27 @@
+ul{
+    list-style-type: none;
+}
+#lists-body{
+    width: inherit;
+    height: fit-content;
+}
+#genres,#songs,#queue{
+    width: 33%;
+    display: inline-block;
+    text-align: center;
+    background-color: brown;
+}
+#genres{
+    margin-left: 0.25%;
+}
+nav{
+    background-color: aqua;
+}
+nav>ul>li{
+    display: inline-block;
+    margin-left: 1%;
+}
+body{
+    margin: 0;
+    padding: 0;
+}
