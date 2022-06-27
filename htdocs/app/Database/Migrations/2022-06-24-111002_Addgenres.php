@@ -18,21 +18,14 @@ class Addgenres extends Migration
             "name"=>[
                 "type"          =>"VARCHAR",
                 "constraint"    =>255
-            ],
-            "lyrics"=>[
-                "type"          =>"TEXT"
-            ],
-            "genre"=>[
-                "type"          =>"INT",
-                "constraint"    =>11
             ]
         ]);
         $this->forge->addPrimaryKey("id");
-        $this->forge->createTable("songs");
+        $this->forge->createTable("genres");
     }
 
     public function down()
     {
-        $this->forge->dropTable("songs");
+        $this->forge->dropTable("genres");
     }
 }

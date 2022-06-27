@@ -35,9 +35,9 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
+$routes->get('/', 'Home::loadGeneralPage');
 $routes->get("playlists", "playlists::playlists");
-$routes->get("createData", "createData::createData");
+$routes->get("genres/(:alphanum)", "Home::loadGenre/$1");
 
 /*
  * --------------------------------------------------------------------

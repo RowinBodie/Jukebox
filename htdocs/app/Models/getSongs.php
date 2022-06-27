@@ -1,6 +1,6 @@
 <?php
 
-namespace getSongs;
+namespace App\Models;
 
 class getSongs extends \CodeIgniter\Model{
 

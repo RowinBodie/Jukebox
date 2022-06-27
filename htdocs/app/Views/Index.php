@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
     <div>
@@ -16,28 +16,28 @@
             <ul id="nav-items">
                 <li><a href="/">Homepage</a></li>
                 <li><a href="/playlists">Playlists</a></li>
-                <li><a href="/createData">Create Data</a></li>
             </ul>
         </nav>
         <div id="lists-body">
             <div id="genres">
                 <h3>Genres</h3>
                 <ul id="genres-list">
-                    <li>test</li>
-                    <li>test</li>
+                    <?php foreach($genres as $count => $genre){
+                        ?><li><a href="/genres/<?php echo $genre["id"]?>"><?php echo $genre["name"] ?></a></li>
+                    <?php } ?>
                 </ul>
             </div>
             <div id="songs">
                 <h3>Songs</h3>
                 <ul id="songs-list">
-                    <li>test</li>
-                    <li>test</li>
+                    <?php foreach($songs as $count => $song){
+                        ?><li><?php echo $song["name"] ?></li>
+                    <?php } ?>
                 </ul>
             </div>
             <div id="queue">
                 <h3>Queue</h3>
                 <ul id="queue-list">
-                    <li>test</li>
                     <li>test</li>
                 </ul>
             </div>

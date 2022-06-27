@@ -9,13 +9,13 @@ class AddSongs extends Seeder
     public function run()
     {
         $data = [
-            'name'          => 'darth',
-            'genre'         => '0',
-            'duration'      => '',
-            'lyrics'        => '',
+            'name'          => 'Worlds blowing facts',
+            'genre'         => '6',
+            'duration'      => '190',
+            'lyrics'        => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse nec nunc felis. Quisque non massa ac ex efficitur dapibus id imperdiet leo. Cras commodo, eros nec elementum.',
         ];
 
         // Simple Queries
-        $this->db->query('INSERT INTO songs (name, genre) VALUES(:name:, :genre:)', $data);
+        $this->db->query('INSERT INTO songs (name, genre, duration, lyrics) VALUES(:name:, :genre:, :duration:, :lyrics:)', $data);
     }
 }
