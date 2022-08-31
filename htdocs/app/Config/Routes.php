@@ -38,6 +38,7 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Home::loadGeneralPage');
 $routes->get("playlists", "playlists::playlists");
 $routes->get("genres/(:alphanum)", "Home::loadGenre/$1");
+$routes->get("songDetail/(:alphanum)", "songDetail::loadSongDetail/$1");
 
 /*
  * --------------------------------------------------------------------

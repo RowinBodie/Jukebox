@@ -31,7 +31,7 @@
                 <h3>Songs</h3>
                 <ul id="songs-list">
                     <?php foreach($songs as $count => $song){
-                        ?><li><?php echo $song["name"] ?></li>
+                        ?><li><a href="/songDetail/<?php echo $song["id"] ?>"><?php echo $song["name"] ?></a></li>
                     <?php } ?>
                 </ul>
             </div>
