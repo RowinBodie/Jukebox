@@ -30,6 +30,25 @@ class Home extends BaseController
         return redirect()->back();
     }
 
+    public function clearQueueSong(){
+        session()->remove("queue");
+        return redirect()->back();
+    }
+
+    public function removeQueueSong($id){
+        $queue = session()->get("queue");
+        var_dump($queue);
+        foreach($queue as $position=>$item){
+            if($position == $id){
+                unset($queue[$position]);
+            }
+        }
+        echo "<br>";
+        var_dump($queue);
+        session()->set("queue", $queue);
+        return redirect()->back();
+    }
+
     public function index()
     {
         return view('index');

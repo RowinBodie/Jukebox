@@ -41,6 +41,8 @@ $routes->get("/playlists", "playlists::playlists");
 $routes->get("/genres/(:alphanum)", "Home::loadGenre/$1");
 $routes->get("/songDetail/(:alphanum)", "songDetail::loadSongDetail/$1");
 $routes->get("/addQueueSong/(:alphanum)", "Home::addQueueSong/$1");
+$routes->get("/clearQueueSong", "Home::clearQueueSong");
+$routes->get("/removeQueueSong/(:alphanum)", "Home::removeQueueSong/$1");
 
 /*
  * --------------------------------------------------------------------
