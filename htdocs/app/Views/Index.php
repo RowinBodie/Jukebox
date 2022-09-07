@@ -44,9 +44,9 @@
                 <h3>Queue</h3>
                 <ul id="queue-list">
                     <?php foreach($session as $queue => $sessionSong){
-                        $getSongForQueue = $getSongsModel->where("id", $sessionSong)->findAll(); 
+                        $getSongForQueue = $getSongsModel->where("id", $sessionSong)->first();
                     ?>
-                        <li><?php echo $getSongForQueue ?></li>
+                        <li><?php echo $getSongForQueue['name'] ?></li>
                     <?php }; ?>
                 </ul>
             </div>
