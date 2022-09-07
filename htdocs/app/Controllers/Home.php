@@ -1,9 +1,6 @@
 <?php
 
 namespace App\Controllers;
-
-
-
 class Home extends BaseController
 {
     public function loadGeneralPage(){
@@ -11,16 +8,26 @@ class Home extends BaseController
         $getGenresModel = new \App\Models\getGenres;
         $getSongs = $getSongsModel->findAll();
         $getGenres = $getGenresModel->findAll();
-        return view('index',["songs"=>$getSongs,"genres"=>$getGenres]);
+        if(isset($_SESSION['queue']) ){
+            return view('index',["songs"=>$getSongs,"genres"=>$getGenres]);
+        }else{
+            session()->set("queue", []);
+            return view('index',["songs"=>$getSongs,"genres"=>$getGenres]);
+        }        
     }
 
     public function loadGenre($id){
         $getSongsModel = new \App\Models\getSongs;
         $getGenresModel = new \App\Models\getGenres;
         $getSongs = $getSongsModel->where("genre", $id)
-                                  ->findAll();
+                                    ->findAll();
         $getGenres = $getGenresModel->findAll();
         return view('index',["songs"=>$getSongs,"genres"=>$getGenres]);
+    }
+
+    public function addQueueSong($id){
+        session()->push("queue", [$id]);
+        return redirect()->back();
     }
 
     public function index()

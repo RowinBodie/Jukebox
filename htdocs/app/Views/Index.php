@@ -1,3 +1,8 @@
+<?php
+    $session = session()->get("queue");
+    $getSongsModel = new \App\Models\getSongs;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,21 +29,25 @@
                 <ul id="genres-list">
                     <?php foreach($genres as $count => $genre){
                         ?><li><a href="/genres/<?php echo $genre["id"]?>"><?php echo $genre["name"] ?></a></li>
-                    <?php } ?>
+                    <?php }; ?>
                 </ul>
             </div>
             <div id="songs">
                 <h3>Songs</h3>
                 <ul id="songs-list">
                     <?php foreach($songs as $count => $song){
-                        ?><li><a href="/songDetail/<?php echo $song["id"] ?>"><?php echo $song["name"] ?></a></li>
-                    <?php } ?>
+                        ?><li><a href="/songDetail/<?php echo $song["id"] ?>"><?php echo $song["name"] ?></a> _ <a href="/addQueueSong/<?php echo $song["id"]?>">add to queue</a></li>
+                    <?php }; ?>
                 </ul>
             </div>
             <div id="queue">
                 <h3>Queue</h3>
                 <ul id="queue-list">
-                    <li>test</li>
+                    <?php foreach($session as $queue => $sessionSong){
+                        $getSongForQueue = $getSongsModel->where("id", $sessionSong)->findAll(); 
+                    ?>
+                        <li><?php echo $getSongForQueue ?></li>
+                    <?php }; ?>
                 </ul>
             </div>
         </div>
