@@ -29,6 +29,9 @@
     "scripts": {
         "test": "phpunit"
     },
+    "provide": {
+        "codeigniter4/authentication-implementation": "1.0"
+    },
     "support": {
         "forum": "http://forum.codeigniter.com/",
         "source": "https://github.com/codeigniter4/CodeIgniter4",
