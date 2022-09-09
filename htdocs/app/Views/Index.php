@@ -43,16 +43,12 @@
             <div id="queue">
                 <h3>Queue_<a href="/clearQueueSong">Clear</a></h3>
                 <ul id="queue-list">
-                    <?php 
-                    $hold = 0;
+                    <?php
                     foreach($session as $queue => $sessionSong){
                         $getSongForQueue = $getSongsModel->where("id", $sessionSong)->first();
                     ?>
-                        <li><?php echo $getSongForQueue['name'] ?>_<a href="/removeQueueSong/<?php echo $hold?>">remove</a></li>
-                    <?php 
-                    $hold+=1;
-                    }; 
-                    ?>
+                        <li><?php echo $getSongForQueue['name'] ?>_<a href="/removeQueueSong/<?php echo $queue?>">remove</a></li>
+                    <?php }; ?>
                 </ul>
             </div>
         </div>

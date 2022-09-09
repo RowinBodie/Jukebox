@@ -29,11 +29,14 @@
                     <div class="form-group mb-3">
                         <input type="password" name="confirmpassword" placeholder="Confirm Password" class="form-control" >
                     </div>
-                    <div class="d-grid">
+                    <div class="d-grid  mb-3">
                         <button type="submit" class="btn btn-dark">Signup</button>
                     </div>
                 </form>
-            </div>
+                <div class="d-grid">                    
+                    <a href="/signin" class="btn btn-primary mb-3">Already signed up</a>
+                </div>
+            </div>                
         </div>
     </div>
 </body>
