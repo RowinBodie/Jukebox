@@ -35,16 +35,18 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+$routes->get('/', 'Home::loadGeneralPage');
 $routes->get('/home', 'Home::loadGeneralPage');
 $routes->get("/playlists", "playlists::playlists");
 $routes->get("/genres/(:alphanum)", "Home::loadGenre/$1");
 $routes->get("/songDetail/(:alphanum)", "songDetail::loadSongDetail/$1");
 $routes->get("/addQueueSong/(:alphanum)", "Home::addQueueSong/$1");
 $routes->get("/clearQueueSong", "Home::clearQueueSong");
+$routes->get("/savePlaylist", "Home::loadSavingPlaylist");
 $routes->get("/removeQueueSong/(:alphanum)", "Home::removeQueueSong/$1");
-$routes->get('/', 'SignupController::index');
 $routes->get('/signup', 'SignupController::index');
 $routes->get('/signin', 'SigninController::index');
+$routes->get('/logout', 'SigninController::logout');
 $routes->get('/profile', 'ProfileController::index',['filter' => 'authGuard']);
 
 /*

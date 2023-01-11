@@ -1,6 +1,7 @@
 <?php
     $session = session()->get("queue");
     $getSongsModel = new \App\Models\getSongs;
+    // session_destroy();
 ?>
 
 <!DOCTYPE html>
@@ -14,13 +15,33 @@
 </head>
 <body>
     <div>
-        <div>
+        <div class="line">
             <h1>Awesome Playlists</h1>
+            <?php
+            if(isset($_SESSION['isLoggedIn'])){
+            ?>
+            <p> welcome <?php echo $_SESSION['name'] ?></p>
+            <a href="/logout"><button>Logout</button></a>
+            <?php
+                }
+                else{
+            ?>
+            <a href="/signin"><button>SignIn</button></a>
+            <a href="/signup"><button>SignUp</button></a>
+            <?php
+                }
+            ?>
         </div>
         <nav>
             <ul id="nav-items">
                 <li><a href="/home">Homepage</a></li>
+                <?php
+            if(isset($_SESSION['isLoggedIn'])){
+            ?>
                 <li><a href="/playlists">Playlists</a></li>
+            <?php
+            }
+            ?>
             </ul>
         </nav>
         <div id="lists-body">
@@ -41,8 +62,13 @@
                 </ul>
             </div>
             <div id="queue">
-                <h3>Queue_<a href="/clearQueueSong">Clear</a></h3>
+                <h3>Queue <?php if(isset($_SESSION['name'])){ ?> <a href="/savePlaylist">Save</a> <?php } ?> <a href="/clearQueueSong">Clear</a></h3>
                 <ul id="queue-list">
+                    <li>Total duration: <?php 
+                        if(isset($_SESSION['queue']) ){
+                            echo $time;
+                        }                    
+                    ?></li>
                     <?php
                     foreach($session as $queue => $sessionSong){
                         $getSongForQueue = $getSongsModel->where("id", $sessionSong)->first();
@@ -55,3 +81,4 @@
     </div>
 </body>
 </html>
+

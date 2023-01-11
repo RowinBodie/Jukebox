@@ -42,4 +42,11 @@ class SigninController extends Controller
             return redirect()->to('/signin');
         }
     }
+    public function logout(){
+        session()->remove("email");
+        session()->remove("isLoggedIn");
+        session()->remove("name");
+        session()->remove("id");
+        return redirect()->to('/home');
+    }
 }

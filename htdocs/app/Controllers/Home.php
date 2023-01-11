@@ -1,6 +1,8 @@
 <?php
-
 namespace App\Controllers;
+use App\Models\UserModel;
+use App\Models\getPlaylists;
+
 class Home extends BaseController
 {
     public function loadGeneralPage(){
@@ -8,11 +10,20 @@ class Home extends BaseController
         $getGenresModel = new \App\Models\getGenres;
         $getSongs = $getSongsModel->findAll();
         $getGenres = $getGenresModel->findAll();
+        $totalWatchDuration = 0;
+        $time = "00:00";
         if(isset($_SESSION['queue']) ){
-            return view('index',["songs"=>$getSongs,"genres"=>$getGenres]);
+            foreach($_SESSION['queue'] as $session => $sessionSong){
+                $getSongForQueue = $getSongsModel->where("id", $sessionSong)->first();
+                $totalWatchDuration += $getSongForQueue["duration"];
+            }
+            $minutes = floor($totalWatchDuration / 60);
+            $seconds = ($totalWatchDuration % 60);
+            $time = sprintf("%02d:%02d", $minutes, $seconds);
+            return view('index',["songs"=>$getSongs,"genres"=>$getGenres,"time"=>$time]);
         }else{
             session()->set("queue", []);
-            return view('index',["songs"=>$getSongs,"genres"=>$getGenres]);
+            return view('index',["songs"=>$getSongs,"genres"=>$getGenres,"time"=>$time]);
         }        
     }
 
@@ -25,6 +36,19 @@ class Home extends BaseController
         return view('index',["songs"=>$getSongs,"genres"=>$getGenres]);
     }
 
+    public function loadSavingPlaylist(){
+        return view('save');
+    }
+
+    public function savePlaylist(){
+        $getPlaylists;
+        $name = $this->request->getVar('name');
+        $userName = session()->get('name');
+
+        session()->remove("queue");
+        return redirect()->back();
+    }
+
     public function addQueueSong($id){
         session()->push("queue", [$id]);
         return redirect()->back();
@@ -34,7 +58,7 @@ class Home extends BaseController
         session()->remove("queue");
         return redirect()->back();
     }
-
+    
     public function removeQueueSong($id){
         $queue = session()->get("queue");
         var_dump($queue);
