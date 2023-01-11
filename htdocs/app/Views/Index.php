@@ -1,6 +1,7 @@
 <?php
     $session = session()->get("queue");
     $getSongsModel = new \App\Models\getSongs;
+    $getPlaylistsModel = new \App\Models\getPlaylists;
     // session_destroy();
 ?>
 
@@ -57,7 +58,32 @@
                 <h3>Songs</h3>
                 <ul id="songs-list">
                     <?php foreach($songs as $count => $song){
-                        ?><li><a href="/songDetail/<?php echo $song["id"] ?>"><?php echo $song["name"] ?></a> _ <a href="/addQueueSong/<?php echo $song["id"]?>">add to queue</a></li>
+                        ?><li>
+                            <a href="/songDetail/<?php echo $song["id"] ?>"><?php echo $song["name"] ?></a>
+                            %
+                            <a href="/addQueueSong/<?php echo $song["id"]?>">add to queue</a>
+                            
+                            <?php
+                            if(isset($_SESSION['isLoggedIn'])){
+                            ?>
+                            %
+                                <form action="<?php echo base_url(); ?>/Home/addSongToPlaylist/<?php echo $song["id"]?>" method="post">
+                                <select id="playlistId" name="playlistId">
+                                    <?php
+                                    $playlists = $getPlaylistsModel->where("userId", session()->get("id"))->findall();
+                                    foreach($playlists as $i => $playlist){
+                                    ?>
+                                    <option value="<?= $playlist['id']?>"><?= $playlist['name']?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                                <input type="submit">
+                                </form>
+                            <?php
+                            }
+                            ?>
+                        </li>
                     <?php }; ?>
                 </ul>
             </div>

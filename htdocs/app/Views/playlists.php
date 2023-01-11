@@ -1,3 +1,9 @@
+<?php
+    $getSongsModel = new \App\Models\getSongs;
+    $getPlaylistSongsModel = new \App\Models\getPlaylistSongs;
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +24,30 @@
                 <li><a href="/playlists">Playlists</a></li>
             </ul>
         </nav>
+        <div>
+            <?php
+            foreach($playlists as $number => $playlist){
+                $songs = $getPlaylistSongsModel->where("playlistid", $playlist["id"])->findall();
+            ?>
+            <form action="<?php echo base_url(); ?>/Home/updatePlaylist/<?php echo $playlist["id"]?>" method="post">
+            <div class="form-group mb-3">
+                <input type="text" name="name" value="<?=$playlist["name"]?>">
+            </div>
+        </form>
+            <ul>
+                <?php
+                    foreach($songs as $number =>$songid){
+                        $song = $getSongsModel->where("id", $songid["songId"])->first();
+                ?>
+                <li><?= $song["name"]?> <a href="/deleteSongPlaylist/<?=  $songid["id"]?>">remove</a></li>
+                <?php
+                    };
+                ?>
+            </ul>
+            <?php
+                }
+            ?>
+        </div>
     </div>
 </body>
 </html>

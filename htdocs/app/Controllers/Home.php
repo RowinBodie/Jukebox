@@ -2,6 +2,7 @@
 namespace App\Controllers;
 use App\Models\UserModel;
 use App\Models\getPlaylists;
+use App\Models\getPlaylistSongs;
 
 class Home extends BaseController
 {
@@ -30,10 +31,14 @@ class Home extends BaseController
     public function loadGenre($id){
         $getSongsModel = new \App\Models\getSongs;
         $getGenresModel = new \App\Models\getGenres;
+        $totalWatchDuration = 0;
         $getSongs = $getSongsModel->where("genre", $id)
                                     ->findAll();
         $getGenres = $getGenresModel->findAll();
-        return view('index',["songs"=>$getSongs,"genres"=>$getGenres]);
+        $minutes = floor($totalWatchDuration / 60);
+        $seconds = ($totalWatchDuration % 60);
+        $time = sprintf("%02d:%02d", $minutes, $seconds);
+        return view('index',["songs"=>$getSongs,"genres"=>$getGenres,"time"=>$time]);
     }
 
     public function loadSavingPlaylist(){
@@ -41,12 +46,56 @@ class Home extends BaseController
     }
 
     public function savePlaylist(){
-        $getPlaylists;
-        $name = $this->request->getVar('name');
-        $userName = session()->get('name');
+        $userId = session()->get('id');
+
+        $playlistModel = new getPlaylists();
+        $playlistSongs = new getPlaylistSongs();
+        $data = [
+            'name'     => $this->request->getVar('name'),
+            'userId'    => $userId,
+        ];
+        $playlistModel->save($data);
+        $createdPlaylist = $playlistModel->orderby('id','DESC')->where("name" , $this->request->getVar('name'))->limit(1)->first();
+        $queue = session()->get("queue");    
+        foreach($queue as $playlistSong =>$songs){
+            $songdata = [
+                'songId' => $songs,
+                'playlistId' => $createdPlaylist["id"]
+            ];
+            $playlistSongs->save($songdata);
+        }
 
         session()->remove("queue");
+        return redirect()->to('/home');
+    }
+
+    public function updatePlaylist($id){
+        $playlistModel = new getPlaylists();
+        $name =  $this->request->getVar('name');
+        $data = [
+            'id' => $id,
+            'name'=> $name,
+            'userId' => session()->get("id")
+        ];
+        $playlistModel->where("id",$id)->replace($data);
         return redirect()->back();
+    }
+    
+    public function deleteSongPlaylist($songId){
+        $getplaylistSongs = new getPlaylistSongs();
+        $playlistSongs = $getplaylistSongs->where('id', $songId)->first();
+        $getplaylistSongs->delete($playlistSongs);
+        return redirect()->back();
+    }
+    public function addSongToPlaylist($songId){
+        $getPlaylistSongsModel = new getPlaylistSongs();
+        $playlistId =  $this->request->getVar('playlistId');
+        $data = [
+            'songId'=> $songId,
+            'playlistId' => $playlistId
+        ];
+        $getPlaylistSongsModel->save($data);
+        return redirect()->back();;
     }
 
     public function addQueueSong($id){
