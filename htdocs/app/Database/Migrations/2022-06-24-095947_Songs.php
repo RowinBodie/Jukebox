@@ -25,6 +25,14 @@ class Songs extends Migration
             "genre"=>[
                 "type"          =>"INT",
                 "constraint"    =>11
+            ],
+            "duration"=>[
+                "type"          =>"INT",
+                "constraint"    =>11
+            ],
+            "artist"=>[
+                "type"          =>"VARCHAR",
+                "constraint"    =>255
             ]
         ]);
         $this->forge->addPrimaryKey("id");

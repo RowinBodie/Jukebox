@@ -47,6 +47,7 @@ class SigninController extends Controller
         session()->remove("isLoggedIn");
         session()->remove("name");
         session()->remove("id");
+        session()->remove("queue");
         return redirect()->to('/home');
     }
 }

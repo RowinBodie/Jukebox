@@ -9,10 +9,28 @@ class Addgenres extends Seeder
     public function run()
     {
         $data = [
-            'name'  => 'Jazz'
+            [
+                'name'  => 'Pop'
+            ],
+            [
+                'name'  => 'Rock'
+            ],
+            [
+                'name'  => 'Country'
+            ],
+            [
+                'name'  => 'Hip-Hop'
+            ],
+            [
+                'name'  => 'Jazz'
+            ],
+            
         ];
 
-        // Simple Queries
-        $this->db->query('INSERT INTO genres (name) VALUES(:name:)', $data);
+        foreach($data as $item){
+            $name = $item['name'];
+
+            $this->db->query("INSERT INTO genres (name) VALUES ('$name')");
+        }
     }
 }

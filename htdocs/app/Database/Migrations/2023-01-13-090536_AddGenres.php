@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class ReAddusers extends Migration
+class AddGenres extends Migration
 {
     public function up()
     {
@@ -17,23 +17,15 @@ class ReAddusers extends Migration
             ],
             "name"=>[
                 "type"          =>"VARCHAR",
-                "constraint"    =>150
-            ],
-            "email"=>[
-                "type"          =>"VARCHAR",
-                "constraint"    =>150
-            ],
-            "password"=>[
-                "type"          =>"VARCHAR",
-                "constraint"    =>150
+                "constraint"    =>255
             ]
         ]);
         $this->forge->addPrimaryKey("id");
-        $this->forge->createTable("users");
+        $this->forge->createTable("genres");
     }
 
     public function down()
     {
-        $this->forge->dropTable("users");
+        $this->forge->dropTable("genres");
     }
 }
