@@ -11,7 +11,9 @@ ul{
     text-align: center;
     background-color: brown;
 }
-
+#holder>li{
+    display: inline-block;
+}
 #genres{
     margin-left: 0.25%;
     width: 25%;
@@ -41,4 +43,7 @@ body{
 }
 .line>a,.line>p{
     float: right;
+}
+.inline{
+    display: inline-block;
 }

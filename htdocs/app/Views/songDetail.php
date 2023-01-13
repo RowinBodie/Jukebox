@@ -25,6 +25,7 @@
             <ul id="songs-list">
                 <?php foreach($songs as $count => $song){?>
                     <li>song name: <?php echo $song["name"] ?></li>
+                    <li>artist: <?php echo $song["artist"] ?></li>
                     <li>song duration in seconds: <?php echo $song["duration"] ?></li>
                     <li>song lyrics: <?php echo $song["lyrics"] ?></li>
                 <?php } ?>

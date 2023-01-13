@@ -56,10 +56,21 @@
             </div>
             <div id="songs">
                 <h3>Songs</h3>
+                <ul id="holder">
+                    <li>name</li>
+                    :
+                    <li>song_duration</li>
+                    :
+                    <li>artist</li>
+                </ul>
                 <ul id="songs-list">
                     <?php foreach($songs as $count => $song){
                         ?><li>
                             <a href="/songDetail/<?php echo $song["id"] ?>"><?php echo $song["name"] ?></a>
+                            %
+                            <p class="inline"><?= $song["duration"]?></p>
+                            %
+                            <p class="inline"><?= $song["artist"]?></p>
                             %
                             <a href="/addQueueSong/<?php echo $song["id"]?>">add to queue</a>
                             

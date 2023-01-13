@@ -33,11 +33,24 @@
             <div class="form-group mb-3">
                 <input type="text" name="name" value="<?=$playlist["name"]?>">
             </div>
+            <div class="form-group mb-3">
+                <p>duration: <?php  
+                $totalWatchDuration = 0;
+                foreach($songs as $number =>$songid){
+                    $song = $getSongsModel->where("id", $songid["songId"])->first();
+                    $totalWatchDuration += $song["duration"];
+                }
+                $minutes = floor($totalWatchDuration / 60);
+                $seconds = ($totalWatchDuration % 60);
+                $time = sprintf("%02d:%02d", $minutes, $seconds);
+                echo $time?>
+            </p>
+            </div>
         </form>
             <ul>
                 <?php
                     foreach($songs as $number =>$songid){
-                        $song = $getSongsModel->where("id", $songid["songId"])->first();
+                    $song = $getSongsModel->where("id", $songid["songId"])->first();
                 ?>
                 <li><?= $song["name"]?> <a href="/deleteSongPlaylist/<?=  $songid["id"]?>">remove</a></li>
                 <?php
