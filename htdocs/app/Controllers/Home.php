@@ -6,14 +6,19 @@ use App\Models\getPlaylistSongs;
 
 class Home extends BaseController
 {
+    // general page loading function
     public function loadGeneralPage(){
+        // gets the models
         $getSongsModel = new \App\Models\getSongs;
         $getGenresModel = new \App\Models\getGenres;
+        // gets all data needed
         $getSongs = $getSongsModel->findAll();
         $getGenres = $getGenresModel->findAll();
+        // base time variables
         $totalWatchDuration = 0;
         $time = "00:00";
         if(isset($_SESSION['queue']) ){
+            // generates the total duration for the queue
             foreach($_SESSION['queue'] as $session => $sessionSong){
                 $getSongForQueue = $getSongsModel->where("id", $sessionSong)->first();
                 $totalWatchDuration += $getSongForQueue["duration"];
@@ -21,6 +26,7 @@ class Home extends BaseController
             $minutes = floor($totalWatchDuration / 60);
             $seconds = ($totalWatchDuration % 60);
             $time = sprintf("%02d:%02d", $minutes, $seconds);
+
             return view('index',["songs"=>$getSongs,"genres"=>$getGenres,"time"=>$time]);
         }else{
             session()->set("queue", []);

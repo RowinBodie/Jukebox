@@ -11,18 +11,20 @@ class SignupController extends Controller
         $data = [];
         echo view('signup', $data);
     }
-  
+    // function to make a account
     public function store()
     {
         helper(['form']);
+        // rules for the account
         $rules = [
             'name'          => 'required|min_length[2]|max_length[50]',
             'email'         => 'required|min_length[4]|max_length[100]|valid_email|is_unique[users.email]',
             'password'      => 'required|min_length[4]|max_length[50]',
             'confirmpassword'  => 'matches[password]'
         ];
-          
+        // checks the above rules 
         if($this->validate($rules)){
+            // creates account
             $userModel = new UserModel();
             $data = [
                 'name'     => $this->request->getVar('name'),

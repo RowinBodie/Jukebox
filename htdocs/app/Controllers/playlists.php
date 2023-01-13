@@ -6,6 +6,7 @@ use App\Models\getPlaylistSongs;
 
 class playlists extends BaseController
 {
+    // load the playlist page
     public function playlists()
     {
         $playlistsModel = new getPlaylists;
