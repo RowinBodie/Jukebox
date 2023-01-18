@@ -5,6 +5,7 @@ use App\Models\UserModel;
   
 class SignupController extends Controller
 {
+    // load the index page
     public function index()
     {
         helper(['form']);

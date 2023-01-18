@@ -1,7 +1,8 @@
 <?php
-    $session = session()->get("queue");
     $getSongsModel = new \App\Models\getSongs;
     $getPlaylistsModel = new \App\Models\getPlaylists;
+    $getQueueSessionController = new \App\Controllers\QueueSessionController;
+    
     // session_destroy();
 ?>
 
@@ -72,8 +73,7 @@
                             %
                             <p class="inline"><?= $song["artist"]?></p>
                             %
-                            <a href="/addQueueSong/<?php echo $song["id"]?>">add to queue</a>
-                            
+                            <a href="/addQueueSong/<?php echo $song["id"]?>">add to queue</a>                            
                             <?php
                             if(isset($_SESSION['isLoggedIn'])){
                             ?>
@@ -107,7 +107,7 @@
                         }                    
                     ?></li>
                     <?php
-                    foreach($session as $queue => $sessionSong){
+                    foreach($getQueueSessionController->getSession() as $queue => $sessionSong){
                         $getSongForQueue = $getSongsModel->where("id", $sessionSong)->first();
                     ?>
                         <li><?php echo $getSongForQueue['name'] ?>_<a href="/removeQueueSong/<?php echo $queue?>">remove</a></li>

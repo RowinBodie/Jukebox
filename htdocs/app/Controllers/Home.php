@@ -3,6 +3,7 @@ namespace App\Controllers;
 use App\Models\UserModel;
 use App\Models\getPlaylists;
 use App\Models\getPlaylistSongs;
+use \App\Controllers\QueueSessionController;
 
 class Home extends BaseController
 {
@@ -11,15 +12,16 @@ class Home extends BaseController
         // gets the models
         $getSongsModel = new \App\Models\getSongs;
         $getGenresModel = new \App\Models\getGenres;
+        $getQueueSessionController = new \App\Controllers\QueueSessionController;
         // gets all data needed
         $getSongs = $getSongsModel->findAll();
         $getGenres = $getGenresModel->findAll();
         // base time variables
         $totalWatchDuration = 0;
         $time = "00:00";
-        if(isset($_SESSION['queue']) ){
+        if($getQueueSessionController->isSet()){
             // generates the total duration for the queue
-            foreach($_SESSION['queue'] as $session => $sessionSong){
+            foreach($getQueueSessionController->getSession() as $session => $sessionSong){
                 $getSongForQueue = $getSongsModel->where("id", $sessionSong)->first();
                 $totalWatchDuration += $getSongForQueue["duration"];
             }
@@ -29,7 +31,7 @@ class Home extends BaseController
 
             return view('index',["songs"=>$getSongs,"genres"=>$getGenres,"time"=>$time]);
         }else{
-            session()->set("queue", []);
+            $getQueueSessionController->createSession();
             return view('index',["songs"=>$getSongs,"genres"=>$getGenres,"time"=>$time]);
         }        
     }
@@ -38,6 +40,7 @@ class Home extends BaseController
         // get models
         $getSongsModel = new \App\Models\getSongs;
         $getGenresModel = new \App\Models\getGenres;
+        $getQueueSessionController = new \App\Controllers\QueueSessionController;
         $totalWatchDuration = 0;
         // gets data needed
         $getSongs = $getSongsModel->where("genre", $id)
@@ -60,6 +63,7 @@ class Home extends BaseController
         // get models
         $playlistModel = new getPlaylists();
         $playlistSongs = new getPlaylistSongs();
+        $getQueueSessionController = new \App\Controllers\QueueSessionController;
         // get data for database
         $data = [
             'name'     => $this->request->getVar('name'),
@@ -70,7 +74,7 @@ class Home extends BaseController
         // get the lastest added database to add songs to
         $createdPlaylist = $playlistModel->orderby('id','DESC')->where("name" , $this->request->getVar('name'))->limit(1)->first();
         // get all songs from queue
-        $queue = session()->get("queue");   
+        $queue = $getQueueSessionController->getSession();  
         // save everthing into the newly created playlist 
         foreach($queue as $playlistSong =>$songs){
             $songdata = [
@@ -80,7 +84,7 @@ class Home extends BaseController
             $playlistSongs->save($songdata);
         }
 
-        session()->remove("queue");
+        $getQueueSessionController->emptySession();
         return redirect()->to('/home');
     }
     // update playlist name function
@@ -115,31 +119,26 @@ class Home extends BaseController
     }
     // add song to queue
     public function addQueueSong($id){
-        session()->push("queue", [$id]);
+        $getQueueSessionController = new \App\Controllers\QueueSessionController;
+        $getQueueSessionController->addSong($id);
         return redirect()->back();
     }
     // clear the queue
     public function clearQueueSong(){
-        session()->remove("queue");
+        $getQueueSessionController = new \App\Controllers\QueueSessionController;
+        $getQueueSessionController->emptySession();
         return redirect()->back();
     }
     // remove song from queue
     public function removeQueueSong($id){
-        $queue = session()->get("queue");
-        var_dump($queue);
+        $getQueueSessionController = new \App\Controllers\QueueSessionController;
+        $queue = $getQueueSessionController->getSession();
         foreach($queue as $position=>$item){
             if($position == $id){
                 unset($queue[$position]);
             }
         }
-        echo "<br>";
-        var_dump($queue);
-        session()->set("queue", $queue);
+        $getQueueSessionController->setData($queue);
         return redirect()->back();
-    }
-
-    public function index()
-    {
-        return view('index');
     }
 }
